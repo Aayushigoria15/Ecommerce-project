@@ -1,0 +1,110 @@
+{%extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  </head>
+
+  <body>
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+      <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+          <div
+            class="banner_content d-md-flex justify-content-between align-items-center"
+          >
+            <div class="mb-3 mb-md-0">
+              <h2>Sign Up </h2> 
+            </div>
+            <div class="page_link">
+              <a href="/">Home</a>
+              <a href="#">Sign Up</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!-- ================ contact section start ================= -->
+  <section class="section_gap">
+    <div class="container">
+     
+
+
+      <div class="row">
+        <div class="col-12">
+          <h2 class="contact-title">User Sign Up</h2>
+        </div>
+        <div class="col-lg-8 mb-4 mb-lg-0">
+            {% if msg %}
+            <b style="color: black;">{{msg}}</b>
+            {% endif %}          
+            <form class="form-contact contact_form" action="{% url 'signup' %}" method="post" id="contactForm" enctype="multipart/form-data"  >
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <select class="form-control" name="usertype" id="name" >
+                    <option value="" disabled selected>-----Select User Type-----</option>
+                    <option value="buyer">Buyer</option>
+                    <option value="seller">Seller</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" name="fname" id="name" type="text" placeholder="Enter your first name">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" name="lname" id="name" type="text" placeholder="Enter your last name">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                    <textarea class="form-control w-100" name="address" id="message" cols="30" rows="9" placeholder="Enter Address"></textarea>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" name="email" id="email" type="email" placeholder="Enter email address">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" name="mobile" id="subject" type="text" placeholder="Enter mobile">
+                </div>
+              </div>
+               <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" name="profile_picture" id="subject" type="file" >
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" name="password" id="subject" type="password" placeholder="Enter Password">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" name="cpassword" id="subject" type="password" placeholder="Enter Confirm Password">
+                </div>
+              </div>
+            </div>
+            <div class="form-group mt-lg-3">
+              <button type="submit" class="main_btn">Sign Up</button>
+            </div>
+          </form>
+
+
+        </div>
+    </div>
+  </section>
+	<!-- ================ contact section end ================= -->
+</body>
+
+</html>
+{% endblock %}

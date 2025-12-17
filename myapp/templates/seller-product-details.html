@@ -1,0 +1,80 @@
+{%extends 'seller-header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+   
+      <!--================Home Banner Area =================-->
+    <section class="banner_area">
+      <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+          <div
+            class="banner_content d-md-flex justify-content-between align-items-center"
+          >
+            <div class="mb-3 mb-md-0">
+              <h2>Product Details</h2>
+            </div>
+            <div class="page_link">
+              <a href="/">Home</a>
+              <a href="">Product Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Single Product Area =================-->
+    <div class="product_image_area">
+      <div class="container">
+        <div class="row s_product_inner">
+          <div class="col-lg-6">
+            <div class="s_product_img">
+              <div
+                id="carouselExampleIndicators"
+                class="carousel slide"
+                data-ride="carousel"
+              >
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img
+                      class="d-block w-100 mb-5"
+                      src="{{product.product_image.url}}"
+                      alt="First slide"
+                      style="height: 600px;"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 offset-lg-1">
+            <div class="s_product_text">
+              <h3>{{product.product_name}}</h3>
+              <h2>{{product.product_price}}</h2>
+              <ul class="list">
+                <li>
+                  <a class="active" href="#">
+                    <span>Category</span> : {{product.product_category}}</a
+                  >
+                </li>
+              </ul>
+              <p>
+                {{product.product_desc}}
+              </p>
+              <div class="card_area">
+                <a class="main_btn" href="{% url 'seller-product-edit' pk=product.pk %}">Edit</a>
+                <a class="main_btn" href="{% url 'seller-product-delete' pk=product.pk %}">delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--================End Single Product Area =================-->
+
+
+  </body>
+</html>
+{% endblock %}

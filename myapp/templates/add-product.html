@@ -1,0 +1,93 @@
+{%extends 'seller-header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  </head>
+
+  <body>
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+      <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+          <div
+            class="banner_content d-md-flex justify-content-between align-items-center"
+          >
+            <div class="mb-3 mb-md-0">
+              <h2>Add Product </h2> 
+            </div>
+            <div class="page_link">
+              <a href="/">Home</a>
+              <a href="#">Add Product</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!-- ================ contact section start ================= -->
+  <section class="section_gap">
+    <div class="container">
+     
+
+
+      <div class="row">
+        <div class="col-12">
+          <h2 class="contact-title">Add Product</h2>
+        </div>
+        <div class="col-lg-8 mb-4 mb-lg-0">
+            {% if msg %}
+            <b style="color: black;">{{msg}}</b>
+            {% endif %}          
+            <form class="form-contact contact_form" action="{% url 'add-product' %}" method="post" id="contactForm" enctype="multipart/form-data"  >
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <select class="form-control" name="product_category" id="name" >
+                    <option value="" disabled selected>-----Select User Type-----</option>
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Kids">Kids</option>
+                    <option value="Accessories">Accessories</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" name="product_name" id="name" type="text" placeholder="Enter Product Name">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" name="product_price" id="name" type="text" placeholder="Enter Price">
+                </div>
+              </div>
+              
+              <div class="col-12">
+                <div class="form-group">
+                    <textarea class="form-control w-100" name="product_desc" id="message" cols="30" rows="9" placeholder="Enter Details"></textarea>
+                </div>
+              </div>
+               <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" name="product_image" id="subject" type="file" >
+                </div>
+              </div>
+            </div>
+            <div class="form-group mt-lg-3">
+              <button type="submit" class="main_btn">Add Product</button>
+            </div>
+          </form>
+
+
+        </div>
+    </div>
+  </section>
+	<!-- ================ contact section end ================= -->
+</body>
+
+</html>
+{% endblock %}

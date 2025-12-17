@@ -1,0 +1,157 @@
+{%extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+
+  <body>
+  
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+      <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+          <div
+            class="banner_content d-md-flex justify-content-between align-items-center"
+          >
+            <div class="mb-3 mb-md-0">
+              <h2>Cart</h2>
+              <p>Very us move be blessed multiply night</p>
+            </div>
+            <div class="page_link">
+              <a href="/">Home</a>
+              <a href="#">Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Home Banner Area =================-->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+      <div class="container">
+        <div class="cart_inner">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+               {% for i in carts %}
+                <tr>
+                  <td>
+                    <div class="media">
+                      <div class="d-flex">
+                        <img
+                          src="{{i.product.product_image.url}}"
+                          alt=""
+                          style="width: 50px; height: 50px; border-radius: 50%;"
+                        />
+                      </div>
+                      <div class="media-body">
+                        <p>{{i.product.product_name}}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h5>${{i.product.product_price}}</h5>
+                  </td>
+                  <td>
+                    <div class="product_count">
+                     <form name="change_qty" method="post" action="{% url 'change-qty' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="cid" value="{{i.pk}}"/>
+                      <input
+                        type="number"
+                        name="product_qty"
+                        min="1"
+                        maxlength="10"
+                        value="{{i.product_qty}}"
+                        title="Quantity:"
+                        class="input-text qty"
+                        onchange="this.form.submit()";
+                      />
+                     
+                     </form>
+                    </div>
+                  </td>
+                  <td>
+                    <h5>${{i.total_price}}</h5>
+                  </td>
+                </tr>
+                {% endfor %}
+                
+                
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <h5>Subtotal</h5>
+                  </td>
+                  <td>
+                    <h5>{{net_price}}</h5>
+                  </td>
+                </tr>
+               
+                <tr class="out_button_area">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <div class="checkout_btn_inner">
+                     <form method="post">
+                      {% csrf_token %}
+                      <input type="hidden" id="net_price" name="amount" value="{{net_price}}">
+                      <button class="main_btn" type="button" id="checkout-button">Proceed to Checkout</button>
+                     </form>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================End Cart Area =================-->    
+    <script type="text/javascript">
+      var stripe = Stripe('pk_test_51SfBlxRGrvSz5y3Ltpz9msgayYOanNpTudatGRsuWyK1XHJsOOrmcVEJ6eLruccjI0ubAIbtnlBR423DM6PuTZyk000irr8Ezs');
+      var checkoutButton = document.getElementById('checkout-button');
+      checkoutButton.addEventListener('click', function () {
+        fetch('/create-checkout-session/', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: JSON.stringify({
+            'post_data': '{{net_price}}'
+          }),
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (session) {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+          })
+          .then(function (result) {
+            if (result.error) {
+              alert(result.error.message);
+            }
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
+</html>
+{% endblock %}
